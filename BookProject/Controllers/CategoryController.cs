@@ -37,6 +37,7 @@ namespace BookProject.Controllers
             {
                 _db.Categories.Add(category);
                 _db.SaveChanges();
+                TempData["success"] = "Category created succesfully";  // basarili mesaji dondurmek icin
                 return RedirectToAction("Index");
             }
 
@@ -65,6 +66,7 @@ namespace BookProject.Controllers
             {
                 _db.Categories.Update(category);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated succesfully";
                 return RedirectToAction("Index");
             }
 
@@ -95,6 +97,7 @@ namespace BookProject.Controllers
             }
             _db.Categories.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category deleted succesfully";
             return RedirectToAction("Index");
         }
     }
