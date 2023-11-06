@@ -46,12 +46,13 @@ namespace BookProject.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
             Category? categoryFromDb = _db.Categories.Find(id);
-            if(categoryFromDb == null)
+
+            if (categoryFromDb == null)
             {
                 return NotFound();
             }
@@ -62,13 +63,39 @@ namespace BookProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
+                _db.Categories.Update(category);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View();
 
+        }
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? categoryFromDb = _db.Categories.Find(id);
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
