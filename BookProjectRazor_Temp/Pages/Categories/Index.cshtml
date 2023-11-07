@@ -1,9 +1,15 @@
-﻿@{
-    // Sayfa basligi olarak Category Page gozukmesi icin
-    ViewData["Title"] = "Category Page";
-}
-@model List<Category>
+﻿@page
+@model BookProjectRazor_Temp.Pages.Categories.IndexModel
 
+@{
+    // Sayfa basligi olarak Category Page gozukmesi icin
+    ViewData["Title"] = "Category Razor Page";
+} 
+<!--   
+
+Razor Page = MVC template’lerindeki klasör sayısını azaltmak, sayfa bazlı uygulamaları daha kolay geliştirmek için tasarlanmış yeni bir model
+
+-->
 <div class="container">
     <div class="row pt-4 pb-3">
         <div class="col-6">
@@ -12,7 +18,7 @@
             </h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-dark">
+            <a asp-page="/categories/create" class="btn btn-dark">
                 <i class="bi bi-plus-circle"></i> Create New Category
             </a>
         </div>
@@ -21,24 +27,24 @@
     <table class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>Category Name</th>
+                <th>Category Name</th>  
                 <th>Display Order</th>
                 <th>Update / Delete</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
+            @foreach (var obj in Model.CategoryList.OrderBy(u => u.DisplayOrder))
             {
                 <tr>
                     <td>@obj.Name</td>
                     <td>@obj.DisplayOrder</td>
                     <td>
                         <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
+                            <a asp-page="/categories/edit" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
                                 <!-- asp-route-id => buradaki id HttpGet metodundaki id degisken adi ile ayni olmalidir -->
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                            <a asp-page="/categories/delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash-fill"></i> Delete
                             </a>
                         </div>

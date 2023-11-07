@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34227.203
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookProject", "BookProject\BookProject.csproj", "{B89D5E8C-D558-4857-9346-E4EA517C0D4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookProject", "BookProject\BookProject.csproj", "{B89D5E8C-D558-4857-9346-E4EA517C0D4F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookProjectRazor_Temp", "BookProjectRazor_Temp\BookProjectRazor_Temp.csproj", "{DB1CFD7F-8CE3-4060-8976-B2A902BB4E20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B89D5E8C-D558-4857-9346-E4EA517C0D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B89D5E8C-D558-4857-9346-E4EA517C0D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B89D5E8C-D558-4857-9346-E4EA517C0D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB1CFD7F-8CE3-4060-8976-B2A902BB4E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB1CFD7F-8CE3-4060-8976-B2A902BB4E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB1CFD7F-8CE3-4060-8976-B2A902BB4E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB1CFD7F-8CE3-4060-8976-B2A902BB4E20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

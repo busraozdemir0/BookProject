@@ -1,0 +1,43 @@
+﻿@page
+@model BookProjectRazor_Temp.Pages.Categories.CreateModel
+@{
+    ViewData["Title"] = "Category Create";
+}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Create Category</h2>
+            <hr />
+        </div>
+       @*  <div asp-validation-summary="All"></div>  *@ <!-- All yazdigimizda, tum hata mesajlari ustte alt alta sirali bicimde gosterir -->
+        <div class="mb-3 row p-1">
+            <label asp-for="Category.Name" class="p-0"></label>  <!-- razor page'lerde model kullanmak icin cs dosyasinda Category belirtiyoruz ve Category. yazarak icindeki fieldlara ulasabiliyoruz -->
+            <input asp-for="Category.Name" type="text" class="form-control" />
+            <span asp-validation-for="Category.Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Category.DisplayOrder" class="p-0"></label>
+            <input asp-for="Category.DisplayOrder" type="text" class="form-control" />
+            <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-dark form-control">Create</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-page="/categories/index" class="btn btn-outline-dark form-control">Back to List</a>
+            </div>
+        </div>
+        
+       
+    </div>
+</form>
+
+<!-- Asagidaki kod sayesinde validasyon islemi sayfa yenilenmese bile otomatik ve eszamanli olarak calisacaktir.  -->
+ @section Scripts{  <!-- validation script dosyalarinin tutuldugu partial-->
+     @{
+         <partial name="_ValidationScriptsPartial" />
+      }
+  } 
