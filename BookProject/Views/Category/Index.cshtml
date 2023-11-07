@@ -4,48 +4,54 @@
 }
 @model List<Category>
 
-<div class="container">
-    <div class="row pt-4 pb-3">
-        <div class="col-6">
-            <h2 class="text-dark">
-                Category List
-            </h2>
-        </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-dark">
-                <i class="bi bi-plus-circle"></i> Create New Category
-            </a>
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="col-12 text-center">
+            <h2 class="text-white py-2">Category List</h2>
         </div>
     </div>
-
-    <table class="table table-hover table-striped">
-        <thead>
-            <tr>
-                <th>Category Name</th>
-                <th>Display Order</th>
-                <th>Update / Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
-            {
-                <tr>
-                    <td>@obj.Name</td>
-                    <td>@obj.DisplayOrder</td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
-                                <!-- asp-route-id => buradaki id HttpGet metodundaki id degisken adi ile ayni olmalidir -->
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                <i class="bi bi-trash-fill"></i> Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-
-    </table>
 </div>
+
+<div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Category" asp-action="Create" class="btn btn-dark">
+                    <i class="bi bi-plus-circle"></i> Create New Category
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Display Order</th>
+                    <th>Update / Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
+                {
+                    <tr>
+                        <td>@obj.Name</td>
+                        <td>@obj.DisplayOrder</td>
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
+                                    <!-- asp-route-id => buradaki id HttpGet metodundaki id degisken adi ile ayni olmalidir -->
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+

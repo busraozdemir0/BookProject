@@ -1,5 +1,5 @@
-﻿using BookProject.Data;
-using BookProject.Models;
+﻿using DataAccess.Data;
+using Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookProject.Controllers
