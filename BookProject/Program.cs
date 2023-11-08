@@ -1,4 +1,6 @@
 using DataAccess.Data;
+using DataAccess.Repository;
+using DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options=> 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  // appsettings.json dosyasindaki DefaultConnection icerisindeki baglanti dizesini getir.
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();  // DI cercevesini kullanabilmek icin servis kaydini gerceklestirdik
 
 var app = builder.Build();
 

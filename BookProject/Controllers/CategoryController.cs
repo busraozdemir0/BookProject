@@ -1,20 +1,21 @@
 ﻿using DataAccess.Data;
 using Models;
 using Microsoft.AspNetCore.Mvc;
+using DataAccess.Repository.IRepository;
 
 namespace BookProject.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly ICategoryRepository _categoryRepo;  // DI cercevesi icin Program.cs'de servis kaydi yapilmasi gerekir
+        public CategoryController(ICategoryRepository db)
         {
-            _db = db;
+            _categoryRepo = db;
         }
 
         public IActionResult Index()
         {
-            List<Category> onjCategoryList = _db.Categories.ToList();
+            List<Category> onjCategoryList = _categoryRepo.GetAll().ToList();
             return View(onjCategoryList);
         }
 
@@ -35,8 +36,8 @@ namespace BookProject.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
-                _db.SaveChanges();
+                _categoryRepo.Add(category);
+                _categoryRepo.Save();
                 TempData["success"] = "Category created succesfully";  // basarili mesaji dondurmek icin
                 return RedirectToAction("Index");
             }
@@ -51,7 +52,7 @@ namespace BookProject.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _db.Categories.Find(id);
+            Category? categoryFromDb = _categoryRepo.Get(u=>u.Id==id);
 
             if (categoryFromDb == null)
             {
@@ -64,8 +65,8 @@ namespace BookProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(category);
-                _db.SaveChanges();
+                _categoryRepo.Update(category);
+                _categoryRepo.Save();
                 TempData["success"] = "Category updated succesfully";
                 return RedirectToAction("Index");
             }
@@ -79,7 +80,7 @@ namespace BookProject.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _db.Categories.Find(id);
+            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == id);
 
             if (categoryFromDb == null)
             {
@@ -90,13 +91,13 @@ namespace BookProject.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _db.Categories.Find(id);
+            Category obj = _categoryRepo.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _categoryRepo.Remove(obj);
+            _categoryRepo.Save();
             TempData["success"] = "Category deleted succesfully";
             return RedirectToAction("Index");
         }
