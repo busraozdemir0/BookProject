@@ -3,8 +3,9 @@ using Models;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess.Repository.IRepository;
 
-namespace BookProject.Controllers
+namespace BookProject.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;  // DI cercevesi icin Program.cs'de servis kaydi yapilmasi gerekir
@@ -52,7 +53,7 @@ namespace BookProject.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _unitOfWork.Category.Get(u=>u.Id==id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
 
             if (categoryFromDb == null)
             {
