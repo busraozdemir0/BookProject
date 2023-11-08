@@ -10,7 +10,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options=> 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  // appsettings.json dosyasindaki DefaultConnection icerisindeki baglanti dizesini getir.
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();  // DI cercevesini kullanabilmek icin servis kaydini gerceklestirdik
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();  // DI cercevesini kullanabilmek icin servis kaydini gerceklestirdik
 
 var app = builder.Build();
 
