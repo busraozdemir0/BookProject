@@ -2,6 +2,8 @@
 using Models;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Models.ViewModels;
 
 namespace BookProject.Areas.Admin.Controllers
 {
@@ -16,16 +18,29 @@ namespace BookProject.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Book> onjBookList = _unitOfWork.Book.GetAll().ToList();
-            return View(onjBookList);
+            List<Book> objBookList = _unitOfWork.Book.GetAll().ToList();
+            return View(objBookList);
         }
 
         public IActionResult Create()
         {
-            return View();
+
+            //ViewBag.CategoryList = CategoryList;  // viewbag kullanimi
+            //ViewData["CategoryList"] = CategoryList;  // viewdata kullanimi
+
+            BookVM bookVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Book = new Book()
+            };
+            return View(bookVM);
         }
         [HttpPost]
-        public IActionResult Create(Book book)
+        public IActionResult Create(BookVM bookVM)
         {
             //if (category.Name == category.DisplayOrder.ToString())
             //{
@@ -37,13 +52,20 @@ namespace BookProject.Areas.Admin.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _unitOfWork.Book.Add(book);
+                _unitOfWork.Book.Add(bookVM.Book);
                 _unitOfWork.Save();
                 TempData["success"] = "Book created succesfully";  // basarili mesaji dondurmek icin
                 return RedirectToAction("Index");
             }
-
-            return View();
+            else
+            {
+                bookVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(bookVM);
+            }
 
         }
 
