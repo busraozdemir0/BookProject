@@ -22,7 +22,7 @@ namespace BookProject.Areas.Admin.Controllers
             return View(objBookList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)  // create ve update bir arada yapacak metod
         {
 
             //ViewBag.CategoryList = CategoryList;  // viewbag kullanimi
@@ -37,10 +37,20 @@ namespace BookProject.Areas.Admin.Controllers
                 }),
                 Book = new Book()
             };
-            return View(bookVM);
+            if(id==null || id == 0)  // id bos veya sifir donerse create yapsin
+            {
+                return View(bookVM);
+            }
+            else  // id dolu gelirse update islemi yapsin
+            {
+                // update
+                bookVM.Book = _unitOfWork.Book.Get(u => u.Id == id);
+                return View(bookVM);
+            }
+            
         }
         [HttpPost]
-        public IActionResult Create(BookVM bookVM)
+        public IActionResult Upsert(BookVM bookVM, IFormFile? file)
         {
             //if (category.Name == category.DisplayOrder.ToString())
             //{
@@ -68,35 +78,35 @@ namespace BookProject.Areas.Admin.Controllers
             }
 
         }
+        // - Edit islemi de Upsert metodu icerisinde kontrollerle gerceklestiriliyor
+        //public IActionResult Edit(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Book? bookFromDb = _unitOfWork.Book.Get(u => u.Id == id);
 
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Book? bookFromDb = _unitOfWork.Book.Get(u => u.Id == id);
+        //    if (bookFromDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(bookFromDb);
+        //}
+        //[HttpPost]
+        //public IActionResult Edit(Book book)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _unitOfWork.Book.Update(book);
+        //        _unitOfWork.Save();
+        //        TempData["success"] = "Book updated succesfully";
+        //        return RedirectToAction("Index");
+        //    }
 
-            if (bookFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(bookFromDb);
-        }
-        [HttpPost]
-        public IActionResult Edit(Book book)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Book.Update(book);
-                _unitOfWork.Save();
-                TempData["success"] = "Book updated succesfully";
-                return RedirectToAction("Index");
-            }
+        //    return View();
 
-            return View();
-
-        }
+        //}
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)

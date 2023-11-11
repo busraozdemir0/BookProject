@@ -17,7 +17,7 @@
             <div class="col-6">
             </div>
             <div class="col-6 text-end">
-                <a asp-controller="Book" asp-action="Create" class="btn btn-dark">
+                <a asp-controller="Book" asp-action="Upsert" class="btn btn-dark">
                     <i class="bi bi-plus-circle"></i> Create New Book
                 </a>
             </div>
@@ -46,7 +46,7 @@
                         <td></td>
                         <td>
                             <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Book" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
+                            <a asp-controller="Book" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
                                     <!-- asp-route-id => buradaki id HttpGet metodundaki id degisken adi ile ayni olmalidir -->
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
