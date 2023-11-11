@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace BookProject.Areas.Admin.Controllers
 {
@@ -11,9 +12,11 @@ namespace BookProject.Areas.Admin.Controllers
     public class BookController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;  // DI cercevesi icin Program.cs'de servis kaydi yapilmasi gerekir
-        public BookController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public BookController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -41,7 +44,7 @@ namespace BookProject.Areas.Admin.Controllers
             {
                 return View(bookVM);
             }
-            else  // id dolu gelirse update islemi yapsin
+            else  // id dolu gelirse update islemi yapilacagi icin o id Book tablosunda bulunup dondurulsun
             {
                 // update
                 bookVM.Book = _unitOfWork.Book.Get(u => u.Id == id);
@@ -52,17 +55,39 @@ namespace BookProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Upsert(BookVM bookVM, IFormFile? file)
         {
-            //if (category.Name == category.DisplayOrder.ToString())
-            //{
-            //    ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");  // name ve display order alani tamamen ayni olamaz hatasi
-            //}
-            //if (category.Name!=null && category.Name.ToLower() == "test")
-            //{
-            //    ModelState.AddModelError("", "Test is an invalid value.");  // kullanici category name alanina test girerse test degerinin gecersiz oldugu uyarisi verilsin
-            //}
             if (ModelState.IsValid)
             {
-                _unitOfWork.Book.Add(bookVM.Book);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)  // dosya bos degilse
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);  // benzersiz isim olusturur ve dosyanın uzantısını ekler
+                    string bookPath = Path.Combine(wwwRootPath, @"images/book");
+
+                    if (!string.IsNullOrEmpty(bookVM.Book.ImageUrl))  // sagda gosterilen image, yeni resim yuklendiginde eskisi silinip yenisi gelsin
+                    {
+                        // delete the old image
+                        var oldImagePath = Path.Combine(wwwRootPath, bookVM.Book.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using(var fileStream=new FileStream(Path.Combine(bookPath, fileName),FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    bookVM.Book.ImageUrl =  fileName;
+                }
+                if (bookVM.Book.Id == 0)
+                {
+                    _unitOfWork.Book.Add(bookVM.Book);
+                }
+                else
+                {
+                    _unitOfWork.Book.Update(bookVM.Book);
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Book created succesfully";  // basarili mesaji dondurmek icin
                 return RedirectToAction("Index");

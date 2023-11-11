@@ -13,81 +13,91 @@
 </div>
 <div class="card-body p-4">
     <form method="post" class="row" enctype="multipart/form-data">
-        <div class="border p-3 mb-4">
-            @*  <div asp-validation-summary="All"></div>  *@ <!-- All yazdigimizda, tum hata mesajlari ustte alt alta sirali bicimde gosterir -->
-            <input asp-for="Book.Id" hidden />
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.Title" class="form-control border-0 shadow" />
-                <label asp-for="Book.Title" type="text" class="ms-2"></label>
-                <span asp-validation-for="Book.Title" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <textarea asp-for="Book.Description" class="form-control border-0 shadow"></textarea>
-                <label asp-for="Book.Description" class="ms-2"> </label>
-                <span asp-validation-for="Book.Description" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.ISBN" class="form-control border-0 shadow" />
-                <label asp-for="Book.ISBN" class="ms-2"> </label>
-                <span asp-validation-for="Book.ISBN" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.Author" class="form-control border-0 shadow" />
-                <label asp-for="Book.Author" class="ms-2"> </label>
-                <span asp-validation-for="Book.Author" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.ListPrice" class="form-control border-0 shadow" />
-                <label asp-for="Book.ListPrice" class="ms-2"> </label>
-                <span asp-validation-for="Book.ListPrice" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.Price" class="form-control border-0 shadow" />
-                <label asp-for="Book.Price" class="ms-2"> </label>
-                <span asp-validation-for="Book.Price" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.Price50" class="form-control border-0 shadow" />
-                <label asp-for="Book.Price50" class="ms-2"> </label>
-                <span asp-validation-for="Book.Price50" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input asp-for="Book.Price100" class="form-control border-0 shadow" />
-                <label asp-for="Book.Price100" class="ms-2"> </label>
-                <span asp-validation-for="Book.Price100" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                @*  <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select form-control border-0 shadow"> *@
-                <select asp-for="@Model.Book.CategoryId" asp-items="@Model.CategoryList" class="form-select form-control border-0 shadow">
-                    <option disabled selected>--Select Category--</option>
-                </select>
-                <label asp-for="Book.CategoryId" class="ms-2"> </label>
-                <span asp-validation-for="Book.CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-floating py-2 col-12">
-                <input type="file" class="form-control border-0 shadow" />
-                <label asp-for="Book.ImageUrl" class="ms-2"> </label>
-            </div>
+        <input asp-for="Book.Id" hidden />
+        <input asp-for="Book.ImageUrl" hidden />
+        <div class="row">
+            <div class="col-10">
+                <div class="border p-3 mb-4">
+                    @*  <div asp-validation-summary="All"></div>  *@ <!-- All yazdigimizda, tum hata mesajlari ustte alt alta sirali bicimde gosterir -->
 
-            <div class="row pt-2">
-                <div class="col-6 col-md-3">
-                    @if (Model.Book.Id != 0)
-                    {
-                        <button type="submit" class="btn btn-dark form-control">Update</button>
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-dark form-control">Create</button>
-                    }
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.Title" class="form-control border-0 shadow" />
+                        <label asp-for="Book.Title" type="text" class="ms-2"></label>
+                        <span asp-validation-for="Book.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <label asp-for="Book.Description" class="ms-2 text-muted"> </label>
+                        <textarea asp-for="Book.Description" class="form-control border-0 shadow"></textarea>
+
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.ISBN" class="form-control border-0 shadow" />
+                        <label asp-for="Book.ISBN" class="ms-2"> </label>
+                        <span asp-validation-for="Book.ISBN" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.Author" class="form-control border-0 shadow" />
+                        <label asp-for="Book.Author" class="ms-2"> </label>
+                        <span asp-validation-for="Book.Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.ListPrice" class="form-control border-0 shadow" />
+                        <label asp-for="Book.ListPrice" class="ms-2"> </label>
+                        <span asp-validation-for="Book.ListPrice" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.Price" class="form-control border-0 shadow" />
+                        <label asp-for="Book.Price" class="ms-2"> </label>
+                        <span asp-validation-for="Book.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.Price50" class="form-control border-0 shadow" />
+                        <label asp-for="Book.Price50" class="ms-2"> </label>
+                        <span asp-validation-for="Book.Price50" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input asp-for="Book.Price100" class="form-control border-0 shadow" />
+                        <label asp-for="Book.Price100" class="ms-2"> </label>
+                        <span asp-validation-for="Book.Price100" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        @*  <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select form-control border-0 shadow"> *@
+                        <select asp-for="@Model.Book.CategoryId" asp-items="@Model.CategoryList" class="form-select form-control border-0 shadow">
+                            <option disabled selected>--Select Category--</option>
+                        </select>
+                        <label asp-for="Book.CategoryId" class="ms-2"> </label>
+                        <span asp-validation-for="Book.CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-2 col-12">
+                        <input type="file" name="file" class="form-control border-0 shadow" /> <!-- name="file" parametredeki file adiyla eslesmelidir -->
+                        <label asp-for="Book.ImageUrl" class="ms-2"> </label>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-6 col-md-3">
+                            @if (Model.Book.Id != 0)
+                            {
+                                <button type="submit" class="btn btn-dark form-control">Update</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-dark form-control">Create</button>
+                            }
+
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a asp-controller="Book" asp-action="Index" class="btn btn-outline-dark form-control">Back to List</a>
+                        </div>
+                    </div>
+
 
                 </div>
-                <div class="col-6 col-md-3">
-                    <a asp-controller="Book" asp-action="Index" class="btn btn-outline-dark form-control">Back to List</a>
-                </div>
             </div>
-
-
+            <div class="col-2">
+                <img src="/images/book/@Model.Book.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+            </div>
         </div>
+       
     </form>
 </div>
 
@@ -98,4 +108,22 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+
+     
+    <script>
+        // https://www.tiny.cloud/my-account/integrate/ sitesi ile yazi fontunu, rengini, stilini degistirilebilen eklenti eklemis oluyoruz.
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons lists table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | tinycomments | checklist numlist bullist indent outdent| removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+    </script>
 } 
