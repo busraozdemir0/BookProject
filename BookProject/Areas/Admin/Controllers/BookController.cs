@@ -168,7 +168,7 @@ namespace BookProject.Areas.Admin.Controllers
             List<Book> objBookList = _unitOfWork.Book.GetAll(includeProperties: "Category").ToList();
             return Json(new { data = objBookList });
         }
-
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var bookToBeDeleted = _unitOfWork.Book.Get(u=>u.Id==id);
