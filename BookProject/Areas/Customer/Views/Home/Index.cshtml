@@ -2,7 +2,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model IEnumerable<Book>
+
+<div class="row pb-3 mb-5">
+    @foreach (var book in Model)
+    {
+        <div class="col-lg-3 col-sm-6">
+            <div class="row p-2">
+                <div class="col-12 p-1">
+                    <div class="card border-0 p-3 shadow border-top border-5 rounded">
+                        <img src="/images/book/@book.ImageUrl" class="card-img-top rounded" style="width:275px; height:300px;" />
+                        <div class="card-body pb-0">
+                            <div class="pl-1">
+                                <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@book.Title</p>
+                                <p class="card-title text-warning text-center">by <b>@book.Author</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p class="text-dark text-opacity-75 text-uppercase text-center mb-0">
+                                    List Price:
+                                    <span class="text-decoration-line-through ">
+                                        @book.ListPrice.ToString("c")
+                                    </span>
+                                </p>  <!-- ToString("c") ile pc'nin yerel diline göre para birimi ekliyoruz' -->
+                            </div>
+                            <div class="pl-1">
+                                <p class="text-dark text-opacity-75 text-uppercase text-center">
+                                    As low as:
+                                    <span>
+                                        @book.Price100.ToString("c")
+                                    </span>
+                                </p>  <!-- ToString("c") ile pc'nin yerel diline göre para birimi ekliyoruz' -->
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Details" asp-route-bookId="@book.Id" class="btn btn-primary bg-gradient border-0 form-control">
+                                Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
