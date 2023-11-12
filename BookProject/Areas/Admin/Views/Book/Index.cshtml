@@ -12,53 +12,33 @@
     </div>
 </div>
 
-<div class="card-body p-4">
-        <div class="row pFb-3">
-            <div class="col-6">
-            </div>
-            <div class="col-6 text-end">
-                <a asp-controller="Book" asp-action="Upsert" class="btn btn-dark">
-                    <i class="bi bi-plus-circle"></i> Create New Book
-                </a>
-            </div>
+<div class="card-body p-4 mb-5">
+    <div class="row pFb-3">
+        <div class="col-6">
         </div>
-
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>ISBN</th>
-                    <th>Price</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th></th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Model)
-                {
-                    <tr>
-                        <td>@obj.Title</td>
-                        <td>@obj.ISBN</td>
-                        <td>@obj.ListPrice</td>
-                        <td>@obj.Author</td>
-                        <td>@obj.Category.Name</td>  <!-- tablolari include ettigimiz icin ulasabiliriz -->
-                        <td>
-                            <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Book" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-warning mx-2">
-                                    <!-- asp-route-id => buradaki id HttpGet metodundaki id degisken adi ile ayni olmalidir -->
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a asp-controller="Book" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                    <i class="bi bi-trash-fill"></i> Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-
-        </table>
+        <div class="col-6 text-end mb-4">
+            <a asp-controller="Book" asp-action="Upsert" class="btn btn-dark">
+                <i class="bi bi-plus-circle"></i> Create New Book
+            </a>
+        </div>
     </div>
+
+    <table id="tblData" class="table table-hover table-striped mb-5" style="width:100%">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>ISBN</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th></th>
+
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/book.js"></script>
+}
 

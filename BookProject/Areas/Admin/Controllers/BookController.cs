@@ -132,32 +132,64 @@ namespace BookProject.Areas.Admin.Controllers
         //    return View();
 
         //}
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Book? bookFromDb = _unitOfWork.Book.Get(u => u.Id == id);
+
+        //    if (bookFromDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(bookFromDb);
+        //}
+        //[HttpPost, ActionName("Delete")]
+        //public IActionResult DeletePOST(int? id)
+        //{
+        //    Book obj = _unitOfWork.Book.Get(u => u.Id == id);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _unitOfWork.Book.Remove(obj);
+        //    _unitOfWork.Save();
+        //    TempData["success"] = "Book deleted succesfully";
+        //    return RedirectToAction("Index");
+        //}
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Book> objBookList = _unitOfWork.Book.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objBookList });
+        }
+
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
+            var bookToBeDeleted = _unitOfWork.Book.Get(u=>u.Id==id);
+            if (bookToBeDeleted == null)
             {
-                return NotFound();
+                return Json(new { success = false, message="Error while deleting" });
             }
-            Book? bookFromDb = _unitOfWork.Book.Get(u => u.Id == id);
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, bookToBeDeleted.ImageUrl.TrimStart('\\'));
 
-            if (bookFromDb == null)
+            if (System.IO.File.Exists(oldImagePath))
             {
-                return NotFound();
+                System.IO.File.Delete(oldImagePath);
             }
-            return View(bookFromDb);
-        }
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Book obj = _unitOfWork.Book.Get(u => u.Id == id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            _unitOfWork.Book.Remove(obj);
+
+            _unitOfWork.Book.Remove(bookToBeDeleted);
             _unitOfWork.Save();
-            TempData["success"] = "Book deleted succesfully";
-            return RedirectToAction("Index");
+
+            return Json(new { success = true, message = "Delete successfull" });
         }
+        
+
+        #endregion
     }
 }
