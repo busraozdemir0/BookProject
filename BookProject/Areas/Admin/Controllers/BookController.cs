@@ -21,7 +21,7 @@ namespace BookProject.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Book> objBookList = _unitOfWork.Book.GetAll().ToList();
+            List<Book> objBookList = _unitOfWork.Book.GetAll(includeProperties: "Category").ToList();
             return View(objBookList);
         }
 
