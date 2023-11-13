@@ -15,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options=>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-builder.Services.ConfigureApplicationCookie(options =>
+builder.Services.ConfigureApplicationCookie(options => // ilgili sayfalarin yonlendirmesi
 {
     options.LoginPath = $"/Identity/Account/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
@@ -24,8 +24,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();  // DI cercevesini kullanabilmek icin servis kaydini gerceklestirdik
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();   // DI cercevesini kullanabilmek icin servis kaydini gerceklestirdik
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();  
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
@@ -46,7 +46,7 @@ app.UseRouting();
 app.UseAuthentication();  // once giris
 app.UseAuthorization();  // sonra yetkilendirme
 
-app.MapRazorPages();
+app.MapRazorPages();  // razor page'leri kullanabilmek icin
 
 app.UseAuthorization();
 

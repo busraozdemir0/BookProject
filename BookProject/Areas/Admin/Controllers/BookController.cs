@@ -85,11 +85,11 @@ namespace BookProject.Areas.Admin.Controllers
                 }
                 if (bookVM.Book.Id == 0)
                 {
-                    _unitOfWork.Book.Add(bookVM.Book);
+                    _unitOfWork.Book.Add(bookVM.Book);  // id 0sa ekleme islemi
                 }
                 else
                 {
-                    _unitOfWork.Book.Update(bookVM.Book);
+                    _unitOfWork.Book.Update(bookVM.Book);  // id dolu geldiyse update islemi yapilsin
                 }
                 _unitOfWork.Save();
                 TempData["success"] = "Book created succesfully";  // basarili mesaji dondurmek icin

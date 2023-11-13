@@ -19,7 +19,7 @@ namespace DataAccess.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // veritabani olustugu anda Categort tablosunda asagidaki cekirdek veriler varsayilan olarak olusacak
+            // veritabani olustugu anda Category tablosunda asagidaki cekirdek veriler varsayilan olarak olusacak
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },

@@ -1,3 +1,5 @@
+// Datatable kullanimi api ile ajax yöntemiyle yapildi
+
 var dataTable;
 $(document).ready(function () {
     loadDataTable();
