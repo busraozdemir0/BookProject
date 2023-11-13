@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,8 +15,8 @@
 </head>
 
 <style>
-    #footerText{
-        opacity:0.5;
+    #footerText {
+        opacity: 0.5;
     }
 </style>
 <body>
@@ -32,24 +33,28 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                      
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Content Management
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Book" asp-action="Index">Book</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Content Management
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Book" asp-action="Index">Book</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -65,7 +70,7 @@
 
     <footer class="border-top footer bg-dark text-light text-center">
         <div id="footerText" class="container">
-             Made with <i class="bi bi-heart-fill"></i> by DotNetMastery
+            Made with <i class="bi bi-heart-fill"></i> by DotNetMastery
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -75,7 +80,7 @@
 
     <!-- https://datatables.net/ sitesinden css ve script linklerini alarak datatable'ı aktif etme/kullanma'  -->
     <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" asp-append-version="true"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
